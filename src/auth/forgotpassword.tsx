@@ -1,6 +1,6 @@
 
 export const ForgotPassword = () => {
   return (
-    <div>Hello</div>
+    <div>PORQUE LA OLVIDASTE BRO</div>
   )
 }

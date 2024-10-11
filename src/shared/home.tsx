@@ -8,6 +8,5 @@ export const Home = () => {
         <img src="/paisaje1.jpg" alt="fondo home"/>
     </div>
     </>
-   
   )
 }
