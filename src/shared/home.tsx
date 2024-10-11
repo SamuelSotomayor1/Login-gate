@@ -1,5 +1,4 @@
-//import { Link } from "react-router-dom";
-import { Navbar } from "./navbar";
+import { Navbar } from "../components/navbar"
 
 export const Home = () => {
   return (
@@ -8,7 +7,6 @@ export const Home = () => {
         <Navbar/>
         <img src="/paisaje1.jpg" alt="fondo home"/>
     </div>
-    
     </>
    
   )
