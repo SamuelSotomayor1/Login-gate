@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { Navbar } from "./navbar";
 
 export const Home = () => {
@@ -6,9 +6,6 @@ export const Home = () => {
     <>
     <div className="flex flex-col min-h-screen bg-white bg-cover bg-center bg-no-repeat">
         <Navbar/>
-        <Link to="/login">
-            <button >Iniciar sesión</button>
-        </Link>
     </div>
     </>
    

@@ -1,11 +1,18 @@
+import { Link } from "react-router-dom"
 
 export const Navbar = () => {
   return (
     <>   
-    <div className="relative z-10 w-full bg-gray-900 shadow-sm">
-        <nav className="relative flex items-center justify-between w-full max-w-screen-xl px-5 py-5 mx-auto text-white lg:px-2 lg:shadow-none">
-            <div className="absolute inset-0 z-20 w-full h-full shadow-md opacity-50 lg:hidden">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Hola</button>
+    <div className="relative z-2 w-full bg-gray-100 py-8 shadow-sm">
+        <nav className="flex justify-between px-4 py-4 border">
+            <div className="border">
+            </div>
+            <div className="border">
+            </div>
+            <div className="border">
+                <Link to="/login">
+                    <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Iniciar sesión</button>
+                </Link>
             </div>
         </nav>
     </div>
