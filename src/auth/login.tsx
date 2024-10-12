@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link, Navigate } from "react-router-dom"
+import { useAuth } from "./authProvider";
 
 export const Login = () => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = useAuth();
+
+  if(auth.isAuthenticated){
+    return <Navigate to="/game"/>;
+  }
     return (
       <>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -26,6 +36,8 @@ export const Login = () => {
               className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
               name="email"
               id="email"
+              value={email}
+              onChange = {(e) => setEmail(e.target.value)} 
               />
             </div>
             <div className="py-4">
@@ -35,14 +47,18 @@ export const Login = () => {
                 name="pass"
                 id="pass"
                 className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+                value={password}
+                onChange = {(e) => setPassword(e.target.value)} 
               />
             </div>
             <div className="flex justify-center w-full py-4">
               <Link to="/forgotpassword"><span className="font-bold text-md text-center">Olvidaste tu contraseña</span></Link>
             </div>
-            <button className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300">
-              Iniciar Sesión
-            </button>
+            <Link to="/game">
+              <button className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300">
+                Iniciar Sesión
+              </button>
+            </Link>
           <div className="text-center text-gray-400">
             No tienes cuenta? <Link to="/register"><span className="font-bold text-black">Registrate gratis</span></Link>
           </div>

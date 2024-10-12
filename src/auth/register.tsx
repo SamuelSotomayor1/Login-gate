@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link, Navigate } from "react-router-dom"
+import { useAuth } from "./authProvider";
 
 export const Register = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = useAuth();
+
+  if(auth.isAuthenticated){
+    return <Navigate to="/game"/>;
+  }
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
         {/*Volver*/}
@@ -25,6 +35,8 @@ export const Register = () => {
               className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
               name="name"
               id="name"
+              value={username}
+              onChange = {(e) => setUsername(e.target.value)} 
               />
             </div>
             <div className="py-4">
@@ -34,6 +46,8 @@ export const Register = () => {
               className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
               name="email"
               id="email"
+              value={email}
+              onChange = {(e) => setEmail(e.target.value)} 
               />
             </div>
             <div className="py-4">
@@ -43,6 +57,8 @@ export const Register = () => {
                 name="pass"
                 id="pass"
                 className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+                value={password}
+                onChange = {(e) => setPassword(e.target.value)} 
               />
             </div>
             <div className="py-4">
