@@ -1,12 +1,48 @@
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import { useAuth } from "./authProvider";
+import { API_URL } from "./constants";
+import { AuthResponseError } from "../types/types";
 
 export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorResponse, setErrorResponse] = useState("");
+
   const auth = useAuth();
+
+  const goTo = useNavigate();
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${API_URL}/login`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email, password
+        }),
+      });
+
+      if(response.ok){
+        console.log("Login successful");
+        setErrorResponse("");
+
+        goTo("/game");
+      } else {
+        console.log("Something went wrong");
+        const json = await response.json() as AuthResponseError;
+        setErrorResponse(json.body.error);
+        return;
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   if(auth.isAuthenticated){
     return <Navigate to="/game"/>;
@@ -24,12 +60,13 @@ export const Login = () => {
             </div>
         <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         {/* left side */}
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="flex flex-col justify-center p-8 md:p-14">
             <span className="mb-3 text-4xl font-bold text-center">Bienvenido</span>
             <span className="font-light text-gray-400 mb-8 text-center pt-2 text-xl">
               Porfavor ingrese sus datos
             </span>
+            {!!errorResponse && <div className="bg-red-500 text-black flex items-center justify-center p-4 rounded-md text-xl">{errorResponse}</div>}
             <div className="py-4">
               <span className="mb-2 text-md">Email</span>
               <input
@@ -55,11 +92,9 @@ export const Login = () => {
             <div className="flex justify-center w-full py-4">
               <Link to="/forgotpassword"><span className="font-bold text-md text-center">Olvidaste tu contraseña</span></Link>
             </div>
-            <Link to="/game">
               <button className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300">
                 Iniciar Sesión
               </button>
-            </Link>
           <div className="text-center text-gray-400">
             No tienes cuenta? <Link to="/register"><span className="font-bold text-black">Registrate gratis</span></Link>
           </div>
