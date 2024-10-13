@@ -24,6 +24,7 @@ export const Login = () => {
             </div>
         <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         {/* left side */}
+        <form>
           <div className="flex flex-col justify-center p-8 md:p-14">
             <span className="mb-3 text-4xl font-bold text-center">Bienvenido</span>
             <span className="font-light text-gray-400 mb-8 text-center pt-2 text-xl">
@@ -63,6 +64,7 @@ export const Login = () => {
             No tienes cuenta? <Link to="/register"><span className="font-bold text-black">Registrate gratis</span></Link>
           </div>
           </div>
+        </form>
         {/* right side */}
           <div className="relative">
             <img
