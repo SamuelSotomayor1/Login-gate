@@ -7,7 +7,7 @@ router.post("/", (req,res) => {
 
     if(!username || !email || !password){
         return res.status(400).json(jsonResponse(400, {
-            error: "Fields are required",
+            error: "Completa todos los campos",
         })
     );
 }
@@ -15,7 +15,6 @@ router.post("/", (req,res) => {
 //crear usuario en la base de datos
 res.status(200).json(jsonResponse(200, {message: "User created successfully"}));
 
-    res.send("register");
 });
 
 module.exports = router;
