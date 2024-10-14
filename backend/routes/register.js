@@ -13,7 +13,9 @@ router.post("/", (req,res) => {
 }
 
 //crear usuario en la base de datos
-res.status(200).json(jsonResponse(200, {message: "User created successfully"}));
+    res.status(200).json(jsonResponse(200, {message: "User created successfully"}));
+
+    res.send("register");
 
 });
 
