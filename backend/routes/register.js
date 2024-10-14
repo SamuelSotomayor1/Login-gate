@@ -1,8 +1,8 @@
 const { jsonResponse } = require("../lib/jsonResponse");
-
 const router = require("express").Router();
+const User = require("../schema/userSchema");
 
-router.post("/", (req,res) => {
+router.post("/", async(req,res) => {
     const {username, email, password} = req.body;
 
     if(!username || !email || !password){
@@ -13,10 +13,18 @@ router.post("/", (req,res) => {
 }
 
 //crear usuario en la base de datos
-    res.status(200).json(jsonResponse(200, {message: "User created successfully"}));
+    const user = new User({username, email, password});
 
-    res.send("register");
-
+    try {
+        await user.save();
+        res.status(200).json(jsonResponse(200, { message: "User created successfully" }));
+    } catch (error) {
+        console.error('Error saving user:', error);
+        res.status(500).json(jsonResponse(500, {
+            error: "Failed to create user",
+            details: error.message
+        }));
+    }
 });
 
 module.exports = router;
