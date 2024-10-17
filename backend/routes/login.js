@@ -19,8 +19,8 @@ if(user){
 
     if(correctPassword){
         //autenticar usuario
-        const accessToken = "access_token";
-        const refreshToken = "refresh_token";
+        const accessToken = user.createAccessToken();
+        const refreshToken = user.createRefreshToken();
         res.status(200).json(jsonResponse(200, { user, accessToken, refreshToken}));
     } else {
         res.status(400).json(
