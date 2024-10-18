@@ -1,6 +1,7 @@
 const { jsonResponse } = require("../lib/jsonResponse");
 const router = require("express").Router();
 const User = require("../schema/userSchema")
+const getUserInfo = require("../lib/getUserInfo");
 
 router.post("/", async (req,res) => {
     const {email, password} = req.body;
@@ -12,7 +13,7 @@ router.post("/", async (req,res) => {
     );
 }
 
-const user = await User.findOne({username});
+const user = await User.findOne({email});
 
 if(user){
     const correctPassword = await user.comparePassword(password, user.password);
@@ -20,19 +21,19 @@ if(user){
     if(correctPassword){
         //autenticar usuario
         const accessToken = user.createAccessToken();
-        const refreshToken = user.createRefreshToken();
-        res.status(200).json(jsonResponse(200, { user, accessToken, refreshToken}));
+        const refreshToken = await user.createRefreshToken();
+        res.status(200).json(jsonResponse(200, { user: getUserInfo(user), accessToken, refreshToken}));
     } else {
         res.status(400).json(
             jsonResponse(400, {
-                error: "User or password incorrect"
+                error: "Email or password incorrect"
             })
         );
     }
 } else {
     res.status(400).json(
         jsonResponse(400, {
-            error: "User not found"
+            error: "Email not found"
         })
     );
 }
