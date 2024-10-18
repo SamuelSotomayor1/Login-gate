@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom"
 import { useAuth } from "./authProvider";
 import { API_URL } from "./constants";
-import { AuthResponseError } from "../types/types";
+import { AuthResponse, AuthResponseError } from "../types/types";
 
 export const Login = () => {
 
@@ -31,8 +31,12 @@ export const Login = () => {
       if(response.ok){
         console.log("Login successful");
         setErrorResponse("");
+        const json = (await response.json()) as AuthResponse
 
-        goTo("/game");
+        if(json.body.accessToken && json.body.refreshToken){
+          auth.saveUser(json);
+          goTo("/game");
+        }
       } else {
         console.log("Something went wrong");
         const json = await response.json() as AuthResponseError;
