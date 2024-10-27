@@ -17,7 +17,7 @@ router.post("/", async (req,res) => {
 
         const payload = verifyRefreshToken(found.token);
         if(payload){
-            const accessToken = generateAccessToken(payload);
+            const accessToken = generateAccessToken(payload.user);
 
             return res.status(200).json(jsonResponse(200, {accessToken}));
         } else {
