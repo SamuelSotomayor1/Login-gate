@@ -3,7 +3,7 @@ const getTokenFromHeader = require("./getTokenFromHeader");
 const { verifyAccessToken } = require("./verifyToken");
 
 function authenticate (req, res, next){
-    const token = getTokenFromHeader;
+    const token = getTokenFromHeader(req);
 
     if(token){
         const decoded = verifyAccessToken(token);
